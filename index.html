@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Festival Land | فيستيفال لاند</title>
+    
+    <!-- خطوط جوجل -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- مكتبة الأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- مكتبة الحركات (AOS) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-gold: #d4af37;
+            --dark-bg: #0d0d0d;
+            --card-bg: #1a1a1a;
+            --text-light: #f5f5f5;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        header {
+            padding: 60px 20px;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=2000&auto=format&fit=crop') center/cover;
+            border-bottom: 2px solid var(--primary-gold);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: var(--primary-gold);
+            margin: 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            color: #ddd;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+        }
+
+        .menu-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 15px;
+            box-sizing: border-box;
+        }
+
+        .menu-title {
+            color: var(--primary-gold);
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .menu-title::after {
+            content: '';
+            width: 50%;
+            height: 2px;
+            background-color: var(--primary-gold);
+            position: absolute;
+            bottom: -10px;
+            left: 25%;
+        }
+
+        /* تعديل الجريد عشان الصور متمطش بالطول وتملى المساحة */
+        .menu-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            align-items: flex-start; /* بيمنع الفراغات السودا لو صورة أطول من التانية */
+        }
+
+        .menu-item {
+            flex: 1 1 100%; /* على الموبايل هتاخد العرض كله */
+            max-width: 500px; /* أقصى عرض على الشاشات الكبيرة */
+            background-color: var(--card-bg);
+            padding: 0; /* شلنا البادينج عشان الصورة تملى المساحة بالظبط */
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 2px solid #333;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            overflow: hidden; /* عشان حواف الصورة تاخد شكل الدوران بتاع البوردر */
+            cursor: pointer; /* بيخلي الماوس شكل إيد عشان الناس تعرف إنها بتتكلك */
+            position: relative;
+        }
+
+        .menu-item::after {
+            content: '\f00e'; /* أيقونة زووم */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: white;
+            background: rgba(0,0,0,0.6);
+            padding: 20px;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .menu-item:hover::after {
+            opacity: 1;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-gold);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: auto;
+            display: block; /* بيمنع أي مسافات تحت الصورة */
+        }
+
+        /* الأيقونات العائمة */
+        .floating-icons {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 999;
+        }
+
+        .floating-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp { background-color: #25D366; }
+        .tiktok { background-color: #000000; border: 1px solid #333; }
+        
+        .tiktok:hover { background-color: #ff0050; border-color: #ff0050; }
+        .whatsapp:hover { background-color: #128C7E; }
+
+        .floating-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        /* نافذة الزووم (Lightbox) */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 10000; 
+            padding-top: 30px; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.95); 
+            overflow: auto;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 95%;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            z-index: 10001;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: var(--primary-gold);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        footer {
+            background-color: #050505;
+            padding: 20px 15px;
+            color: #777;
+            font-size: 0.9rem;
+            border-top: 1px solid #222;
+            margin-top: 40px;
+        }
+
+        /* تعديلات الموبايل (Mobile Friendly) */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.2rem; }
+            header p { font-size: 1rem; }
+            header { min-height: 200px; padding: 40px 15px; }
+            
+            .menu-title { font-size: 1.8rem; margin-bottom: 30px; }
+            .menu-grid { gap: 20px; }
+            
+            .floating-btn { width: 50px; height: 50px; font-size: 24px; }
+            .floating-icons { left: 15px; bottom: 15px; }
+            
+            .modal { padding-top: 60px; } /* مسافة عشان زرار القفل يبان */
+            .close-modal { top: 10px; right: 20px; font-size: 35px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header data-aos="fade-down" data-aos-duration="1000">
+        <h1>FESTIVAL LAND</h1>
+        <p>استمتع بأشهى المأكولات والمشروبات</p>
+    </header>
+
+    <div class="menu-container">
+        <h2 class="menu-title" data-aos="fade-up">قائمة الطعام والمشروبات</h2>
+        <p style="color: #999; margin-bottom: 20px; font-size: 0.9rem;" data-aos="fade-up" data-aos-delay="100">اضغط على الصورة للتكبير</p>
+        
+        <div class="menu-grid">
+            <div class="menu-item" data-aos="zoom-in" data-aos-delay="200">
+                <img src="foods.jpg" alt="Food Menu" class="zoomable">
+            </div>
+            <div class="menu-item" data-aos="zoom-in" data-aos-delay="400">
+                <img src="drinks.jpg" alt="Drinks Menu" class="zoomable">
+            </div>
+        </div>
+    </div>
+
+    <div class="floating-icons">
+        <a href="https://wa.me/201035825534" class="floating-btn whatsapp" target="_blank" title="تواصل معنا عبر واتساب">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://www.tiktok.com/@festival1002?_r=1&_t=ZS-99S4pRkQrBZ" class="floating-btn tiktok" target="_blank" title="تابعنا على تيك توك">
+            <i class="fab fa-tiktok"></i>
+        </a>
+    </div>
+
+    <footer>
+        <p>جميع الحقوق محفوظة © Festival Land 2026</p>
+    </footer>
+
+    <!-- نافذة عرض الصورة المكبرة (Lightbox) -->
+    <div id="imageModal" class="modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImg">
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // تفعيل مؤثرات الدخول
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 50
+        });
+
+        // سكريبت تكبير الصور (Lightbox)
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImg");
+        const images = document.querySelectorAll(".zoomable");
+        const closeBtn = document.getElementsByClassName("close-modal")[0];
+
+        // لما المستخدم يدوس على الصورة
+        images.forEach(img => {
+            img.onclick = function(){
+                modal.style.display = "block";
+                modalImg.src = this.src;
+                // منع التمرير في الخلفية لما الصورة تفتح
+                document.body.style.overflow = "hidden";
+            }
+        });
+
+        // قفل الصورة لما يدوس على علامة X
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+
+        // قفل الصورة لو داس في أي مكان فاضي بره الصورة
+        modal.onclick = function(e) {
+            if (e.target === modal) {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+        }
+    </script>
+</body>
+</html>
