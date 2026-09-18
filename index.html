@@ -86,31 +86,30 @@
             left: 25%;
         }
 
-        /* تعديل الجريد عشان الصور متمطش بالطول وتملى المساحة */
         .menu-grid {
             display: flex;
             flex-wrap: wrap;
             gap: 30px;
             justify-content: center;
-            align-items: flex-start; /* بيمنع الفراغات السودا لو صورة أطول من التانية */
+            align-items: flex-start;
         }
 
         .menu-item {
-            flex: 1 1 100%; /* على الموبايل هتاخد العرض كله */
-            max-width: 500px; /* أقصى عرض على الشاشات الكبيرة */
+            flex: 1 1 100%;
+            max-width: 500px;
             background-color: var(--card-bg);
-            padding: 0; /* شلنا البادينج عشان الصورة تملى المساحة بالظبط */
+            padding: 0;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             border: 2px solid #333;
             transition: transform 0.3s ease, border-color 0.3s ease;
-            overflow: hidden; /* عشان حواف الصورة تاخد شكل الدوران بتاع البوردر */
-            cursor: pointer; /* بيخلي الماوس شكل إيد عشان الناس تعرف إنها بتتكلك */
+            overflow: hidden;
+            cursor: pointer;
             position: relative;
         }
 
         .menu-item::after {
-            content: '\f00e'; /* أيقونة زووم */
+            content: '\f00e';
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
             position: absolute;
@@ -140,7 +139,7 @@
         .menu-item img {
             width: 100%;
             height: auto;
-            display: block; /* بيمنع أي مسافات تحت الصورة */
+            display: block;
         }
 
         /* الأيقونات العائمة */
@@ -166,19 +165,22 @@
             text-decoration: none;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .whatsapp { background-color: #25D366; }
         .tiktok { background-color: #000000; border: 1px solid #333; }
+        .wallet { background-color: var(--primary-gold); color: #000; }
         
-        .tiktok:hover { background-color: #ff0050; border-color: #ff0050; }
+        .tiktok:hover { background-color: #ff0050; border-color: #ff0050; color: white; }
         .whatsapp:hover { background-color: #128C7E; }
+        .wallet:hover { transform: scale(1.1); box-shadow: 0 0 20px var(--primary-gold); }
 
         .floating-btn:hover {
             transform: translateY(-5px) scale(1.1);
         }
 
-        /* نافذة الزووم (Lightbox) */
+        /* نوافذ الـ Modal العامة */
         .modal {
             display: none; 
             position: fixed; 
@@ -190,6 +192,7 @@
             height: 100%; 
             background-color: rgba(0,0,0,0.95); 
             overflow: auto;
+            backdrop-filter: blur(5px);
         }
 
         .modal-content {
@@ -201,7 +204,7 @@
             box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
         }
 
-        .close-modal {
+        .close-modal, .close-payment {
             position: absolute;
             top: 15px;
             right: 25px;
@@ -213,11 +216,106 @@
             z-index: 10001;
         }
 
-        .close-modal:hover,
-        .close-modal:focus {
+        .close-modal:hover, .close-payment:hover {
             color: var(--primary-gold);
-            text-decoration: none;
+        }
+
+        /* تصميم نافذة الدفع */
+        .payment-modal-box {
+            background-color: var(--card-bg);
+            margin: 10% auto;
+            padding: 30px;
+            border: 2px solid var(--primary-gold);
+            border-radius: 15px;
+            max-width: 450px;
+            width: 90%;
+            position: relative;
+            text-align: right;
+            color: #fff;
+        }
+
+        .payment-modal-box h3 {
+            text-align: center;
+            color: var(--primary-gold);
+            margin-top: 0;
+            font-size: 1.8rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+
+        .payment-method {
+            background: #252525;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .payment-method h4 {
+            margin: 0;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .payment-method p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #ccc;
+        }
+
+        .copy-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #111;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #444;
+        }
+
+        .copy-box span {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            color: var(--primary-gold);
+            font-weight: bold;
+        }
+
+        .copy-btn {
+            background: var(--primary-gold);
+            color: #000;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
             cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #fff;
+        }
+
+        .instapay-btn {
+            display: block;
+            background: #8b2184;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: 0.3s;
+        }
+
+        .instapay-btn:hover {
+            background: #6a1865;
+            color: white;
         }
 
         footer {
@@ -229,7 +327,6 @@
             margin-top: 40px;
         }
 
-        /* تعديلات الموبايل (Mobile Friendly) */
         @media (max-width: 768px) {
             header h1 { font-size: 2.2rem; }
             header p { font-size: 1rem; }
@@ -241,8 +338,8 @@
             .floating-btn { width: 50px; height: 50px; font-size: 24px; }
             .floating-icons { left: 15px; bottom: 15px; }
             
-            .modal { padding-top: 60px; } /* مسافة عشان زرار القفل يبان */
-            .close-modal { top: 10px; right: 20px; font-size: 35px; }
+            .modal { padding-top: 60px; } 
+            .close-modal, .close-payment { top: 10px; right: 20px; font-size: 35px; }
         }
     </style>
 </head>
@@ -267,7 +364,11 @@
         </div>
     </div>
 
+    <!-- الأيقونات العائمة الجديدة -->
     <div class="floating-icons">
+        <div class="floating-btn wallet" onclick="openPaymentModal()" title="طرق الدفع">
+            <i class="fas fa-wallet"></i>
+        </div>
         <a href="https://wa.me/201035825534" class="floating-btn whatsapp" target="_blank" title="تواصل معنا عبر واتساب">
             <i class="fab fa-whatsapp"></i>
         </a>
@@ -280,10 +381,44 @@
         <p>جميع الحقوق محفوظة © Festival Land 2026</p>
     </footer>
 
-    <!-- نافذة عرض الصورة المكبرة (Lightbox) -->
+    <!-- نافذة عرض الصورة المكبرة -->
     <div id="imageModal" class="modal">
         <span class="close-modal">&times;</span>
         <img class="modal-content" id="modalImg">
+    </div>
+
+    <!-- نافذة طرق الدفع -->
+    <div id="paymentModal" class="modal">
+        <div class="payment-modal-box">
+            <span class="close-payment" onclick="closePaymentModal()">&times;</span>
+            <h3>طرق الدفع للطلبات</h3>
+
+            <div class="payment-method">
+                <h4><i class="fas fa-hand-holding-usd" style="color: #28a745;"></i> الدفع كاش</h4>
+                <p>يمكنك الدفع نقداً عند استلام طلبك في المطعم.</p>
+            </div>
+
+            <div class="payment-method">
+                <h4><i class="fas fa-mobile-alt" style="color: #e60000;"></i> فودافون كاش</h4>
+                <p>1- حول قيمة الطلب على الرقم التالي:</p>
+                <div class="copy-box" style="margin-bottom: 15px;">
+                    <span id="cashNumber">01008114466</span>
+                    <button class="copy-btn" onclick="copyNumber()">نسخ الرقم <i class="fas fa-copy"></i></button>
+                </div>
+                <p>2- بعد التحويل، ابعت سكرين شوت هنا:</p>
+                <a href="https://wa.me/201035825534?text=السلام عليكم، قمت بتحويل مبلغ على فودافون كاش، ومرفق السكرين شوت:" target="_blank" class="instapay-btn" style="background: #25D366; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                    إرسال السكرين شوت <i class="fab fa-whatsapp" style="font-size: 1.3rem;"></i>
+                </a>
+            </div>
+
+            <div class="payment-method">
+                <h4><i class="fas fa-bolt" style="color: #8b2184;"></i> إنستاباي (InstaPay)</h4>
+                <p>ادفع مباشرة وبكل سهولة من خلال تطبيق إنستاباي:</p>
+                <a href="https://ipn.eg/S/amrelngar1111/instapay/7j7H8e" target="_blank" class="instapay-btn">
+                    ادفع الآن عبر InstaPay <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
+        </div>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -295,32 +430,62 @@
             offset: 50
         });
 
-        // سكريبت تكبير الصور (Lightbox)
-        const modal = document.getElementById("imageModal");
+        // ----------------- سكريبت الصور -----------------
+        const imageModal = document.getElementById("imageModal");
         const modalImg = document.getElementById("modalImg");
         const images = document.querySelectorAll(".zoomable");
-        const closeBtn = document.getElementsByClassName("close-modal")[0];
+        const closeImageBtn = document.getElementsByClassName("close-modal")[0];
 
-        // لما المستخدم يدوس على الصورة
         images.forEach(img => {
             img.onclick = function(){
-                modal.style.display = "block";
+                imageModal.style.display = "block";
                 modalImg.src = this.src;
-                // منع التمرير في الخلفية لما الصورة تفتح
                 document.body.style.overflow = "hidden";
             }
         });
 
-        // قفل الصورة لما يدوس على علامة X
-        closeBtn.onclick = function() {
-            modal.style.display = "none";
+        closeImageBtn.onclick = function() {
+            imageModal.style.display = "none";
             document.body.style.overflow = "auto";
         }
 
-        // قفل الصورة لو داس في أي مكان فاضي بره الصورة
-        modal.onclick = function(e) {
-            if (e.target === modal) {
-                modal.style.display = "none";
+        // ----------------- سكريبت الدفع -----------------
+        const paymentModal = document.getElementById("paymentModal");
+
+        function openPaymentModal() {
+            paymentModal.style.display = "block";
+            document.body.style.overflow = "hidden";
+        }
+
+        function closePaymentModal() {
+            paymentModal.style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+
+        function copyNumber() {
+            const num = document.getElementById("cashNumber").innerText;
+            navigator.clipboard.writeText(num).then(() => {
+                const btn = document.querySelector(".copy-btn");
+                btn.innerHTML = 'تم النسخ <i class="fas fa-check"></i>';
+                btn.style.background = "#28a745";
+                btn.style.color = "#fff";
+                
+                setTimeout(() => {
+                    btn.innerHTML = 'نسخ الرقم <i class="fas fa-copy"></i>';
+                    btn.style.background = "var(--primary-gold)";
+                    btn.style.color = "#000";
+                }, 2000);
+            });
+        }
+
+        // قفل النوافذ لو المستخدم داس بره
+        window.onclick = function(e) {
+            if (e.target === imageModal) {
+                imageModal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+            if (e.target === paymentModal) {
+                paymentModal.style.display = "none";
                 document.body.style.overflow = "auto";
             }
         }
